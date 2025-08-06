@@ -11,7 +11,7 @@ const Summary = ({ entries = [] }) => {
   const exportToExcel = () => {
     const wsData = [
       ['번호', '이름', '금액', '식권'],
-      ...entries.map(entry => [entry.number, entry.name, entry.amount, entry.ticket])
+      ...entries.map(entry => [entry.number, entry.name, entry.amount, entry.ticketCount])
     ];
     const ws = XLSX.utils.aoa_to_sheet(wsData);
     const wb = XLSX.utils.book_new();

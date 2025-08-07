@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Home.css';
 
-function Home({ entries, setEntries, autoNumber, setAutoNumber, handleDelete }) {
+function Home({ entries, setEntries, autoNumber, setAutoNumber }) {
   const [number, setNumber] = useState('');
   const [name, setName] = useState('');
   const [amount, setAmount] = useState(0);
@@ -35,6 +35,47 @@ function Home({ entries, setEntries, autoNumber, setAutoNumber, handleDelete }) 
 
     const usedNumberInt = parseInt(usedNumber);
     setAutoNumber(isNaN(usedNumberInt) ? autoNumber + 1 : usedNumberInt + 1);
+  };
+
+  const handleDelete = (id) => {
+    const index = entries.findIndex(entry => entry.id === id);
+    if (index === -1) return;
+
+    const confirmDelete = window.confirm('정말 삭제하시겠습니까?');
+    if (!confirmDelete) return;
+
+    const targetEntry = entries[index];
+    const currentNumber = parseInt(targetEntry.number);
+    const isLast = index === 0;
+
+    const updated = [...entries];
+    updated.splice(index, 1); // 삭제
+
+    if (isLast) {
+      setEntries(updated);
+      if (!isNaN(currentNumber) && currentNumber === autoNumber - 1) {
+        setAutoNumber(prev => Math.max(1, prev - 1));
+      }
+    } else {
+      const confirmReorder = window.confirm('번호를 재정렬할까요?');
+      if (confirmReorder) {
+        const reordered = updated.map(entry => {
+          const entryNum = parseInt(entry.number);
+          if (!isNaN(entryNum) && entryNum > currentNumber) {
+            return { ...entry, number: (entryNum - 1).toString() };
+          }
+          return entry;
+        });
+        setEntries(reordered);
+
+        if (!isNaN(currentNumber) && currentNumber === autoNumber - 1) {
+          setAutoNumber(prev => Math.max(1, prev - 1));
+        }
+      } else {
+        setEntries(updated);
+        // autoNumber는 유지 (재정렬 안 했으므로)
+      }
+    }
   };
 
   return (

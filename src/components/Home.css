@@ -189,3 +189,50 @@ h2 {
   padding: 4px 8px;
   min-width: 40px;
 }
+
+.confirm-dialog {
+  background: white;
+  border: 2px solid #ccc;
+  padding: 16px;
+  border-radius: 10px;
+  position: fixed;
+  z-index: 999;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -30%);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.confirm-dialog p {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.confirm-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.confirm-buttons button {
+  flex: 1;
+  padding: 10px 0;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.confirm-buttons .keep-number {
+  background-color: #f3f4f6;
+  color: #333;
+}
+
+.confirm-buttons .adjust-number {
+  background-color: #3b82f6;
+  color: white;
+}
